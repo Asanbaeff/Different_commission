@@ -23,12 +23,11 @@ fun calculateTransfer(
 
     val commission: Double = when (cardType) { // Расчет комиссии
         "Mastercard" -> {
-            if (previousTransfers + transferAmount <= mastercardLimit) {
-                0.0
-            } else {
-                val excess = (transferAmount - mastercardLimit) * 0.006 + 20
-                excess
-            }
+            //if (previousTransfers + transferAmount <= mastercardLimit) 0.0
+            if (previousTransfers >= mastercardLimit) (transferAmount * 0.006 + 20)
+            if (previousTransfers + transferAmount > mastercardLimit && previousTransfers < mastercardLimit) {
+                ((previousTransfers + transferAmount - mastercardLimit) * 0.006 + 20)
+            } else 0.0
         }
 
         "Visa" -> {
