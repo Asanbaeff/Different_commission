@@ -1,6 +1,7 @@
 fun main() {
-    println(calculateTransfer("Мир", 0.0, 100_000.0)) // Мир
-    //println(calculateTransfer("Mastercard", 0.0, 150_000.0)) // Mastercard
+    //println(calculateTransfer("Мир", 0.0, 100_000.0)) // Мир
+    println(calculateTransfer("Mastercard", 0.0, 75_000.0)) // Mastercard
+    println(calculateTransfer("Mastercard", 0.0, 150_000.0)) // Mastercard
     //println(calculateTransfer("Visa", 0.0, 100_000.0)) // Visa
 }
 
@@ -22,12 +23,10 @@ fun calculateTransfer(
 
     val commission: Double = when (cardType) { // Расчет комиссии
         "Mastercard" -> {
-            if (previousTransfers < mastercardLimit) {
-                if (transferAmount < mastercardLimit) {
-                    0.0
-                } else (transferAmount - mastercardLimit) * 0.006 + 20
+            if (previousTransfers + transferAmount <= mastercardLimit) {
+                0.0
             } else {
-                val excess = transferAmount * 0.006 + 20
+                val excess = (transferAmount - mastercardLimit) * 0.006 + 20
                 excess
             }
         }
